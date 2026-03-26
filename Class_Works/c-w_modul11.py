@@ -1,22 +1,33 @@
 # Курс: AI+Python
 # Модуль 11. ООП
 # Тема: ООП. Частина 1
-from lamda import name
+from unicodedata import name
+
 
 #   Завдання 1
-# Створіть клас Student з атрибутами name та age. Додайте
-# метод для виводу інформації у форматі «Ім’я: {name}, вік: {age}»
+# Створіть клас Student з атрибутами name та age.
+# Додайте метод для виводу інформації у форматі «Ім’я: {name}, вік: {age}»
 
+print("Створюємо клас Student з атрибутами для виводу інформації у форматі «Ім’я: {name}, вік: {age}»")
 class Student:
+
     def __init__(self, name, age):
         self.name = name
         self.age = age
 
-Student(name="Ахілес", age="40")
+    def student_info (self):
+        print(f"Ім'я студента: {self.name}, Його вік: {self.age} років")
+
+student_1 = Student (name= "Ахіллес", age = 40 )
+
+student_1.student_info()
+
 
 #   Завдання 2
 # Створіть список з 3-ма студентами, дані вводить користувач.
 # Після чого для кожного студента виведіть інформацію про нього за допомогою метода.
+
+print("\nСтворюємо список 3-х студентів з виводом інформації про них!")
 
 class Student():
 
@@ -24,12 +35,12 @@ class Student():
         self.name = name
         self.age = age
 
-    def student_info (self):
-        print(f"Ім'я: {self.name}, Вік: {self.age}")
+    def show_info (self):
+        print(f"Ім'я студента: {self.name}, Його вік: {self.age}")
 
 student_1 = Student (name= "Валерій", age = 37 )
-student_2 = Student (name= "Глєб", age = 38 )
-student_3 = Student (name= "Джек", age = 39 )
+student_2 = Student (name= "Роман", age = 38 )
+student_3 = Student (name= "Стас", age = 39 )
 
 students = []
 
@@ -38,14 +49,14 @@ students.append(student_2)
 students.append(student_3)
 
 for student in students:
-    student.student_info()
-
-print(students)
+    student.show_info()
 
 
 #    Завдання 3
 # Створіть клас Circle з атрибутом radius.
 # Додайте метод для отримання площі кола
+
+print("\nСтворюємо клас Circle з атрибутом radius та отримуємо площі колів")
 
 import math
 
@@ -53,19 +64,23 @@ class Circle:
     def __init__(self, radius):
         self.radius = radius
 
-    def circumference(self):
+    def get_area_circle(self):
         return math.pi * self.radius ** 2
 
-circle = Circle(radius = 5)
-circle_1 = Circle(radius = 10)
+circle_1 = Circle(radius = 15)
+circle_2 = Circle(radius = 25)
 
-print(circle.radius)
+print(f"Радіус 1-го кола = " , round(circle_1.get_area_circle(),2))
+print(f"Радіус 2-го кола = " , round(circle_2.get_area_circle(),2))
+
 
 #   Завдання 4
 # Створіть клас BankAccount з атрибутами owner та balance.
 # Додайте метод deposit для поповнення рахунку
 # Додайте метод withdraw для зняття грошей з рахунку
 # Додайте метод info для виведення інформації про баланс
+
+print("\nСтворюємо клас BankAccount з атрибутами owner та balance для клієнтів")
 
 class BankAccount:
 
@@ -78,22 +93,30 @@ class BankAccount:
         if amount > 0:
             self.balance += amount
         else:
-            print(f" {self.owner} : ")
+            print(f" {self.owner} : Ви не можете внести від'ємну суму")
 
     def withdraw(self, amount):
-        if amount > 0 and amount < self.balance:
+        if 0 < amount < self.balance:
             self.balance -= amount
 
-    def balances(self):
-        pass
+    def info(self):
+        print(f"{self.owner} : Баланс {self.balance} S")
 
-client_1 = BankAccount("Валерій")
+client_1 = BankAccount("Валерій", 1000)
+client_2 = BankAccount("Євген", 800)
+client_3 = BankAccount("Богдан" ,1200)
 
+client_1.deposit(1500)
+client_2.info()
+client_3.withdraw(1000)
+client_1.info()
 
 #   Завдання 5
 # Створіть клас Car з атрибутами brand(марка), year(рік випуску), is_ready(чи готовий до поїздки, за замовчування False).
 # Додайте метод start_engine який заводить двигун, і змінює атрибут is_ready
 # Додайте метод move який виводить повідомлення, що автомобіль їде, або ж ще не готовий в залежності від is_ready.
+
+print("\nСтворюємо клас Car з атрибутами brand(марка), year(рік випуску), is_ready(чи готовий до поїздки")
 
 class Car:
 
