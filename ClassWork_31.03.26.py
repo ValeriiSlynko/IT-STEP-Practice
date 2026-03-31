@@ -78,7 +78,6 @@ project.show_info()
 #   ЗАВДАННЯ 2
 # Створіть клас Телефон з атрибутами:
 #  максимальний обсяг пам’яті
-# Практичне завдання
 #  зайнята пам’ять
 #  чи включений(за замовчуванням False)
 #  встановлені додатки у вигляді словника, де ключ – назва додатку, значення – обсяг пам’яті
@@ -90,11 +89,51 @@ project.show_info()
 #  запустити додаток, якщо він є і якщо телефон включений
 #  включити телефон
 #  виключити телефон
-#
-# class Phone:
-#
-#     def __init__(self, max):
+from typing import  Dict
 
+class Phone:
+
+    def __init__(self, max_memory: int):
+        self.max_memory = max_memory
+        self.used_memory: int = 0
+        self.is_on: bool = False
+        self.apps: Dict[str,int] = {}
+
+    def show_info(self):
+        status = "Ввімкнено" if self.is_on else "Вимкнено"
+        print("--- Інформація про телефон ---")
+        print(f"Статус: {status}")
+        print(f"Пам'ять: {self.used_memory} / {self.max_memory} МБ")
+
+        if self.apps:
+            print("Встановлені додатки:")
+            for name, size in self.apps.items():
+                print(f" - {name}: {size} МБ")
+        else:
+            print("Встановлених додатків немає.")
+        print("------------------------------")
+
+    def install_app(self, app: str, size: int):
+        if self.used_memory + size > self.max_memory:
+            print("Недостатньо пам'яті")
+            return
+
+        self.apps[app] = size
+        self.used_memory += size
+
+    def delete_app(self, app: str):
+        if app in self.apps:
+            size = self.apps.pop(app)
+            self.used_memory -= size
+
+phone1 = Phone(126)
+phone1.show_info()
+phone1.install_app("Telegram", 20)
+phone1.install_app("Google", 10)
+
+phone1.show_info()
+phone1.delete_app("TG")
+phone1.show_info()
 
 # Завдання 3
 # Створіть клас Автомобіль з атрибутами:
