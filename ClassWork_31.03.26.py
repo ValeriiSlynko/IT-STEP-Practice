@@ -24,101 +24,60 @@ class Project:
         self.name = name
         self.budget = budget
 
-        self.expenses: int = 0
-        self.is_finished: bool = False
-        self.time_of_processed: int = 0
-        self.tasks: List[dict] = []
+        self.expenses = 0
+        self.is_finished = False
+        self.time_of_processed = 0
+        self.tasks: List[str] = []
 
-# Вивід інформації
+    # Вивід інформації
     def show_info(self):
-        print(f"\nНазва проекту: {self.name}")
-        print(f"Бюджет: {self.budget}")
-        print(f"Витрати: {self.expenses}")
-        print(f"Час виконання: {self.time_of_processed} місяців")
+        print(f"\nПроект: {self.name}")
+        print(f"Час виконання: {self.time_of_processed} годин")
 
         if not self.tasks:
-            print("Задачі відсутні")
-            return
+            print("Немає задач")
+        else:
+            print("Етапи виробництва:")
+            for task in self.tasks:
+                print(f"- {task}")
 
-        print("\nЗадачі:")
-        for task in self.tasks:
-            print(f"- {task['name']}")
-            print(f"  час: {task['time']}")
-            print(f"  ціна: {task['cost']}")
-            print(f"  виконано: {task['done']}")
-
-            if task["subtasks"]:
-                print("  підзадачі:", ", ".join(task["subtasks"]))
-
-# Додати задачу
+    # Додати етап
     def add_task(self, task_name: str):
-        task = {
-            "name": task_name,
-            "time": 0,
-            "cost": 0,
-            "subtasks": [],
-            "done": False
-        }
-        self.tasks.append(task)
+        self.tasks.append(task_name)
 
-# Знайти задачу
-    def _find_task(self, task_name: str):
-        for task in self.tasks:
-            if task["name"] == task_name:
-                return task
-        return None
-
-# Розбити на підзадачі
+    # Додати підетапи (просто текстом)
     def split_task(self, task_name: str, subtasks: List[str]):
-        task = self._find_task(task_name)
+        for i in range(len(self.tasks)):
+            if self.tasks[i] == task_name:
+                self.tasks[i] = task_name + " (" + ", ".join(subtasks) + ")"
 
-        if not task:
-            print("Задачу не знайдено")
-            return
-
-        task["subtasks"].extend(subtasks)
-
-# Виконати задачу
+    # Завершити етап
     def complete_task(self, task_name: str, time: int, cost: int):
-        task = self._find_task(task_name)
+        if task_name in self.tasks:
+            self.time_of_processed += time
+            self.expenses += cost
 
-        if not task:
-            print("Задачу не знайдено")
-            return
-
-        if self.expenses + cost > self.budget:
-            print("Недостатньо бюджету")
-            return
-
-        task["time"] = time
-        task["cost"] = cost
-        task["done"] = True
-
-        self.expenses += cost
-        self.time_of_processed += time
-
-# Поповнення бюджету
+    # Поповнення бюджету
     def add_budget(self, amount: int):
         self.budget += amount
 
-project = Project("Виробництво авто", 50000)
+project = Project("Виробництво автомобіля", 50000)
 
 project.add_task("Двигун")
 project.add_task("Кузов")
 project.add_task("Збірка")
 
-project.split_task("Двигун", ["Закупка деталей", "Збірка двигуна"])
-project.split_task("Кузов", ["Штамповка", "Фарбування"])
+project.split_task("Двигун", ["деталі", "збірка"])
+project.split_task("Кузов", ["штамповка", "фарбування"])
 
-project.complete_task("Двигун", time=10, cost=15000)
-project.complete_task("Кузов", time=8, cost=12000)
+project.complete_task("Двигун", 10, 15000)
+project.complete_task("Кузов", 8, 12000)
 
 project.show_info()
 
 #   ЗАВДАННЯ 2
 # Створіть клас Телефон з атрибутами:
 #  максимальний обсяг пам’яті
-# Практичне завдання
 #  зайнята пам’ять
 #  чи включений(за замовчуванням False)
 #  встановлені додатки у вигляді словника, де ключ – назва додатку, значення – обсяг пам’яті
@@ -130,11 +89,51 @@ project.show_info()
 #  запустити додаток, якщо він є і якщо телефон включений
 #  включити телефон
 #  виключити телефон
-#
-# class Phone:
-#
-#     def __init__(self, max):
+from typing import  Dict
 
+class Phone:
+
+    def __init__(self, max_memory: int):
+        self.max_memory = max_memory
+        self.used_memory: int = 0
+        self.is_on: bool = False
+        self.apps: Dict[str,int] = {}
+
+    def show_info(self):
+        status = "Ввімкнено" if self.is_on else "Вимкнено"
+        print("--- Інформація про телефон ---")
+        print(f"Статус: {status}")
+        print(f"Пам'ять: {self.used_memory} / {self.max_memory} МБ")
+
+        if self.apps:
+            print("Встановлені додатки:")
+            for name, size in self.apps.items():
+                print(f" - {name}: {size} МБ")
+        else:
+            print("Встановлених додатків немає.")
+        print("------------------------------")
+
+    def install_app(self, app: str, size: int):
+        if self.used_memory + size > self.max_memory:
+            print("Недостатньо пам'яті")
+            return
+
+        self.apps[app] = size
+        self.used_memory += size
+
+    def delete_app(self, app: str):
+        if app in self.apps:
+            size = self.apps.pop(app)
+            self.used_memory -= size
+
+phone1 = Phone(126)
+phone1.show_info()
+phone1.install_app("Telegram", 20)
+phone1.install_app("Google", 10)
+
+phone1.show_info()
+phone1.delete_app("TG")
+phone1.show_info()
 
 # Завдання 3
 # Створіть клас Автомобіль з атрибутами:
