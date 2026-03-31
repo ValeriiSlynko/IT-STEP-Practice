@@ -24,94 +24,54 @@ class Project:
         self.name = name
         self.budget = budget
 
-        self.expenses: int = 0
-        self.is_finished: bool = False
-        self.time_of_processed: int = 0
-        self.tasks: List[dict] = []
+        self.expenses = 0
+        self.is_finished = False
+        self.time_of_processed = 0
+        self.tasks: List[str] = []
 
-# Вивід інформації
+    # Вивід інформації
     def show_info(self):
-        print(f"\nНазва проекту: {self.name}")
-        print(f"Бюджет: {self.budget}")
-        print(f"Витрати: {self.expenses}")
-        print(f"Час виконання: {self.time_of_processed} місяців")
+        print(f"\nПроект: {self.name}")
+        print(f"Час виконання: {self.time_of_processed} годин")
 
         if not self.tasks:
-            print("Задачі відсутні")
-            return
+            print("Немає задач")
+        else:
+            print("Етапи виробництва:")
+            for task in self.tasks:
+                print(f"- {task}")
 
-        print("\nЗадачі:")
-        for task in self.tasks:
-            print(f"- {task['name']}")
-            print(f"  час: {task['time']}")
-            print(f"  ціна: {task['cost']}")
-            print(f"  виконано: {task['done']}")
-
-            if task["subtasks"]:
-                print("  підзадачі:", ", ".join(task["subtasks"]))
-
-# Додати задачу
+    # Додати етап
     def add_task(self, task_name: str):
-        task = {
-            "name": task_name,
-            "time": 0,
-            "cost": 0,
-            "subtasks": [],
-            "done": False
-        }
-        self.tasks.append(task)
+        self.tasks.append(task_name)
 
-# Знайти задачу
-    def _find_task(self, task_name: str):
-        for task in self.tasks:
-            if task["name"] == task_name:
-                return task
-        return None
-
-# Розбити на підзадачі
+    # Додати підетапи (просто текстом)
     def split_task(self, task_name: str, subtasks: List[str]):
-        task = self._find_task(task_name)
+        for i in range(len(self.tasks)):
+            if self.tasks[i] == task_name:
+                self.tasks[i] = task_name + " (" + ", ".join(subtasks) + ")"
 
-        if not task:
-            print("Задачу не знайдено")
-            return
-
-        task["subtasks"].extend(subtasks)
-
-# Виконати задачу
+    # Завершити етап
     def complete_task(self, task_name: str, time: int, cost: int):
-        task = self._find_task(task_name)
+        if task_name in self.tasks:
+            self.time_of_processed += time
+            self.expenses += cost
 
-        if not task:
-            print("Задачу не знайдено")
-            return
-
-        if self.expenses + cost > self.budget:
-            print("Недостатньо бюджету")
-            return
-
-        task["time"] = time
-        task["cost"] = cost
-        task["done"] = True
-
-        self.expenses += cost
-        self.time_of_processed += time
-
-# Поповнення бюджету
+    # Поповнення бюджету
     def add_budget(self, amount: int):
         self.budget += amount
 
-project = Project("Виробництво авто", 50000)
+project = Project("Виробництво автомобіля", 50000)
 
 project.add_task("Двигун")
 project.add_task("Кузов")
 project.add_task("Збірка")
 
-project.split_task("Двигун", ["Закупка деталей", "Збірка двигуна"])
-project.split_task("Кузов", ["Штамповка", "Фарбування"])
+project.split_task("Двигун", ["деталі", "збірка"])
+project.split_task("Кузов", ["штамповка", "фарбування"])
 
-project.complete_task("Двигун", time=10, cost=15000)
-project.complete_task("Кузов", time=8, cost=12000)
+project.complete_task("Двигун", 10, 15000)
+project.complete_task("Кузов", 8, 12000)
 
 project.show_info()
 
