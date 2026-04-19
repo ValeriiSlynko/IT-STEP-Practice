@@ -32,9 +32,9 @@ class Pet(ABC):
 
     def __init__(self, name, satiety = 50, energy = 50):
         # створюємо базові параметри
-        self.name = name
-        self.satiety = satiety
-        self.energy = energy
+        self._name = name
+        self._satiety = satiety
+        self._energy = energy
 
     # метод створення ліміту ситості та енергії
     def _limit(self):
