@@ -1,2 +1,14 @@
-[{"director": "Valerii", "title": 365, "id": 1987, "year": 2026 },
-{"director": "Ivan", "title": 364, "id": 2020, "year": 2026}]
+[
+    {
+        "id": 1,
+        "title": "Titanic",
+        "director": "James Cameron",
+        "year": 1997
+    },
+    {
+        "id": 2,
+        "title": "Avatar",
+        "director": "James Cameron",
+        "year": 2009
+    }
+]
