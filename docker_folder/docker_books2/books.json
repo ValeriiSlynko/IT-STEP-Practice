@@ -1,0 +1,41 @@
+[
+    {
+        "author": "Mark Lutz",
+        "id": "10001",
+        "title": "Learning Python",
+        "year": 2022,
+        "pages": 1648
+    },
+
+    {
+        "author": "J. R. R. Tolkien",
+        "id": "10002",
+        "title": "The Hobbit",
+        "year": 1937,
+        "pages": 310
+    },
+
+    {
+        "author": "George Orwell",
+        "id": "10003",
+        "title": "1984",
+        "year": 1949,
+        "pages": 328
+    },
+
+    {
+        "author": "Jules Verne",
+        "id": "10004",
+        "title": "Twenty Thousand Leagues Under the Sea",
+        "year": 1870,
+        "pages": 426
+    },
+
+    {
+        "author": "Frank Herbert",
+        "id": "10005",
+        "title": "Dune",
+        "year": 1965,
+        "pages": 688
+    }
+]
