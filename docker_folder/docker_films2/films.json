@@ -1,0 +1,26 @@
+[
+    {
+        "id": "1",
+        "title": "Gladiator",
+        "director": "Ridley Scott",
+        "year": 2000
+    },
+    {
+        "id": "2",
+        "title": "Avatar",
+        "director": "James Cameron",
+        "year": 2009
+    },
+    {
+        "id": "3",
+        "title": "The Dark Knight",
+        "director": "Christopher Nolan",
+        "year": 2008
+    },
+    {
+        "id": "4",
+        "title": "Forrest Gump",
+        "director": "Robert Zemeckis",
+        "year": 1994
+    }
+]
