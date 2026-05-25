@@ -46,7 +46,7 @@ def create_book(book: Book) -> dict[str, str]:
 
         books = json.load(file)
 
-    # ----- MAX BOOKS CHECK -----
+    # --- ПЕРЕВІРКА КІЛЬКОСТІ КНИГ ---
     if settings.max_books is not None:
 
         if len[books] >= settings.max_books:
