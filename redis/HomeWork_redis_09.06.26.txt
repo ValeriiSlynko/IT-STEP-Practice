@@ -1,0 +1,112 @@
+valery@VS-Brain:~$ redis-cli --raw
+127.0.0.1:6379> set username "Valery"
+OK
+127.0.0.1:6379>
+127.0.0.1:6379> rpush todo_list "Cook dinner" "Learn Redis"
+4
+127.0.0.1:6379> rpush todo_list 0 -1
+6
+127.0.0.1:6379> hset user_data age 35 country "Ukraine"
+2
+127.0.0.1:6379> hgetall user_data
+age
+35
+country
+Ukraine
+127.0.0.1:6379> sadd tags "programming" "redis" "tutorial"
+3
+127.0.0.1:6379> smembrs
+ERR unknown command 'smembrs'
+
+127.0.0.1:6379> smembers tags
+programming
+redis
+tutorial
+127.0.0.1:6379> incrby page_viwes 5
+5
+127.0.0.1:6379> get page_viwes
+5
+127.0.0.1:6379> setex session_token 120 "abc123"
+OK
+127.0.0.1:6379> del yser name
+1
+127.0.0.1:6379> exists username
+1
+127.0.0.1:6379> set user:1:name "Valery"
+OK
+127.0.0.1:6379> keys user:*
+user:1:name
+127.0.0.1:6379> setbit online_status 0 1
+0
+127.0.0.1:6379> getbit online_status 0
+1
+127.0.0.1:6379> multi set balance 1000
+ERR wrong number of arguments for 'multi' command
+
+127.0.0.1:6379> set balans 1000
+OK
+127.0.0.1:6379> get balance
+
+127.0.0.1:6379> exec
+ERR EXEC without MULTI
+
+127.0.0.1:6379> multi
+OK
+127.0.0.1:6379(TX)> set balance 1000
+QUEUED
+127.0.0.1:6379(TX)> get balance
+QUEUED
+127.0.0.1:6379(TX)> exec
+OK
+1000
+127.0.0.1:6379> sadd cache:popular_articles "article_1" "article_2" "article_3"
+3
+127.0.0.1:6379> sadd set_1 "apple" "banana" "cherry"
+3
+127.0.0.1:6379> sadd set_2 "banana" "cherry" "orange"
+3
+127.0.0.1:6379> sunonionstore union_set set_1 set_2
+ERR unknown command 'sunonionstore', with args beginning with: 'union_set' 'set_1' 'set_2'
+
+127.0.0.1:6379> sunionstore union_set set_1 set_2
+4
+127.0.0.1:6379> sinterstore intersection_set set_1 set_2
+2
+127.0.0.1:6379> subscribe messages
+subscribe
+messages
+1
+127.0.0.1:6379(subscribed mode)> publish messages "Hello Redis!"
+ERR Can't execute 'publish': only (P|S)SUBSCRIBE / (P|S)UNSUBSCRIBE / PING / QUIT / RESET are allowed in this context
+
+127.0.0.1:6379(subscribed mode)>
+127.0.0.1:6379> publish messages "Hello Redis!"
+0
+127.0.0.1:6379> geoadd locations 36.2328 49.9883 "Kharkiv_Center" 36.2312 50.0006 "Sumska_str"
+2
+127.0.0.1:6379> rpush tasks "Task 1" "Task 2" "Task 3"
+3
+127.0.0.1:6379> lrange tasks 0 -1
+Task 1
+Task 2
+Task 3
+127.0.0.1:6379> rpush tasks "Task 4"
+4
+127.0.0.1:6379> lpop tasks
+Task 1
+127.0.0.1:6379> lrange tasks 0 -1
+Task 2
+Task 3
+Task 4
+127.0.0.1:6379> pfadd unique_users "user 1" "user 2" "user 3"
+1
+127.0.0.1:6379> rpush message_queue "Message 10" "Message 20" "Message 30"
+3
+127.0.0.1:6379> lrange 0 -1
+ERR wrong number of arguments for 'lrange' command
+
+127.0.0.1:6379> lrange message_queue  0 -1
+Message 10
+Message 20
+Message 30
+127.0.0.1:6379> shutdown
